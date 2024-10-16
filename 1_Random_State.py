@@ -21,3 +21,6 @@ print(X_train.sample(3))
 # 884  7.050        S  male
 # 244  7.225        C  male
 # 459  7.750        Q  male
+
+
+
