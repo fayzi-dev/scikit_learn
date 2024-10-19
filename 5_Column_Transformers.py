@@ -70,13 +70,13 @@ print(data)
 # 1  2.0  200  2000  20000
 # 2  NaN  300  3000  30000
 
-# ct = make_column_transformer(
-#     (imp, ['A']),
-#     ('passthrough', ['B','C']),
-#     remainder='drop'
-# )
+ct = make_column_transformer(
+    (imp, ['A']),
+    ('passthrough', ['B','C']),
+    remainder='drop'
+)
 
-# print(ct.fit_transform(data))
+print(ct.fit_transform(data))
 # output
 # [[ 1.  11.  14. ]
 #  [ 2.  12.  15. ]
