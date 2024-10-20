@@ -19,7 +19,7 @@ from sklearn.tree import plot_tree, export_text
 
 plt.figure(figsize=(8,6))
 plot_tree(dt, feature_names=features, class_names=classes, filled=True)
-# plt.show()
+plt.show()
 
 
 text_tree = export_text(dt, feature_names=features, show_weights=True)
