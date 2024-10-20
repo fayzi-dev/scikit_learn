@@ -1,4 +1,4 @@
-I am Mohammad Faizi, and I am currently learning machine learning algorithms. Here, you will find a collection of examples that I have implemented during this learning journey. I hope these examples are interesting and helpful for you, dear visitor, and assist in better understanding the concepts.
+ I am currently learning machine learning algorithms. Here, you will find a collection of examples that I have implemented during this learning journey. I hope these examples are interesting and helpful for you, dear visitor, and assist in better understanding the concepts.
 
 1. Random State
 2. Startify
