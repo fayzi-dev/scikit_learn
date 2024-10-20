@@ -13,3 +13,4 @@ I am Mohammad Faizi, and I am currently learning machine learning algorithms. He
 11. Decision Tree
 12. Decision Tree Plots & Pruning Nodes
 13. Drop Binary
+14. Custom Transformer Function For Outlier Remove
