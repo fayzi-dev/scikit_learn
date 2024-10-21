@@ -14,3 +14,4 @@
 12. Decision Tree Plots & Pruning Nodes
 13. Drop Binary
 14. Custom Transformer Function For Outlier Remove
+15. Create Balance & Inbalanced Syntethic_Data by make_classification 
