@@ -1,4 +1,4 @@
-import numpy as np
+"""import numpy as np
 import pandas as pd
 
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -83,3 +83,115 @@ print('Training set score:', pipe.score(X_train, y_train))
 # Training set score: 0.88
 print('Test set score:', pipe.score(X_test, y_test))
 # Test set score: 0.8468468468468469
+
+"""
+
+import numpy as np
+import pandas as pd
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_selection import SelectPercentile, chi2
+from sklearn.compose import make_column_transformer
+from sklearn.pipeline import make_pipeline
+
+
+df = pd.read_csv('Datasets/titanic.csv')
+X = df[['Parch', 'Fare', 'Embarked', 'Sex', 'Name', 'Age']]
+y = df['Survived']
+
+imput = SimpleImputer(strategy='constant')
+one_hot = OneHotEncoder()
+
+pipe = make_pipeline(imput, one_hot)
+vect = CountVectorizer()
+simple_imp = SimpleImputer()
+
+
+# Pipeline Step 1
+ct = make_column_transformer(
+    (imput, ['Embarked', 'Sex']),
+    (vect, 'Name'),
+    (simple_imp, ['Fare', 'Age']),
+    ('passthrough', ['Parch'])
+)
+
+# Pipline Step 2
+selection = SelectPercentile(chi2, percentile=50)
+
+# Pipeline Step 3
+from sklearn.linear_model import LogisticRegression
+logreg = LogisticRegression(solver='liblinear')
+
+
+# Display estimators as diagrams
+from sklearn import set_config
+set_config(display='diagram')
+
+pipe = make_pipeline(ct, selection, logreg)
+print(pipe)
+
+# Export the diagram to html file
+from sklearn.utils import estimator_html_repr
+with open('pipeline.html', 'w') as f:
+    f.write(estimator_html_repr(pipe)) # Output :pipeline.html the base Dir
+
+
+# #Nodes
+# In machine learning libraries like scikit-learn, Pipeline and make_pipeline are both used to create a sequence of preprocessing and modeling steps, but they have some differences:
+
+# Pipeline
+# Manual Definition: With Pipeline, you can manually define the various steps. For example, you can specify the name of each step.
+# More Control: This method gives you more control over naming and the structure of the pipeline.
+# make_pipeline
+# Automatic Definition: make_pipeline automatically extracts the names of the steps from the class names, so there’s no need for manual naming.
+# Simpler and Faster: It's more suitable when you want to quickly create a pipeline without needing precise control over naming.
+# from sklearn.pipeline import Pipeline, make_pipeline
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.linear_model import LogisticRegression
+
+# # Using Pipeline
+# pipeline1 = Pipeline([
+#     ('scaler', StandardScaler()),
+#     ('logreg', LogisticRegression())
+# ])
+
+# # Using make_pipeline
+# pipeline2 = make_pipeline(StandardScaler(), LogisticRegression())
+
+# In this example, pipeline1 has specific names for each step, while pipeline2 has names generated automatically.
+
+
+
+
+
+                    #AND
+
+
+# In scikit-learn, both make_column_transformer and ColumnTransformer are used to apply different transformations to different columns of a dataset. However, they have some key differences:
+
+# ColumnTransformer
+# Manual Definition: ColumnTransformer is used to create a column transformer by explicitly defining the transformations and the columns they should be applied to.
+# More Flexibility: It allows for more complex configurations and can handle a wider range of scenarios.
+# make_column_transformer
+# Simpler Syntax: make_column_transformer provides a more concise and user-friendly way to create a ColumnTransformer. It automatically handles the naming of the transformations based on the provided transformations.
+# Quick Setup: It is useful for quickly setting up transformations without needing to specify the column names explicitly.
+
+# from sklearn.compose import ColumnTransformer, make_column_transformer
+# from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
+# # Using ColumnTransformer
+# column_transformer1 = ColumnTransformer(
+#     transformers=[
+#         ('num', StandardScaler(), ['numerical_column1', 'numerical_column2']),
+#         ('cat', OneHotEncoder(), ['categorical_column'])
+#     ]
+# )
+
+# # Using make_column_transformer
+# column_transformer2 = make_column_transformer(
+#     (StandardScaler(), ['numerical_column1', 'numerical_column2']),
+#     (OneHotEncoder(), ['categorical_column'])
+# )
+
+# In this example, column_transformer1 explicitly defines the transformers and their corresponding columns, while column_transformer2 offers a more concise way to achieve the same result.
