@@ -54,6 +54,7 @@ print(text_tree)
 data = pd.read_csv('Datasets/titanic.csv')
 data['Sex']= data['Sex'].map({'male':0, 'female':1})
 
+
 feature = ['Pclass', 'Fare', 'Sex', 'Parch']
 X_n = df[feature]
 y_n = df['Survived']
