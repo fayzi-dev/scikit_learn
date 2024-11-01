@@ -41,7 +41,12 @@ df = pd.read_csv('Datasets/titanic.csv')
 # print(df.isnull().sum())
 data = df[['Age']]
 # print(data)
-from sklearn.experimental import enable_iterative_imputer
-from sklearn.impute import IterativeImputer
-iterative_imp = IterativeImputer().fit_transform(data)
-print(iterative_imp)
+# from sklearn.experimental import enable_iterative_imputer
+# from sklearn.impute import IterativeImputer
+# iterative_imp = IterativeImputer(initial_strategy='median').fit_transform(data)
+# print(iterative_imp)
+
+#  KNN Imputer
+from sklearn.impute import KNNImputer
+knn_imp = KNNImputer(n_neighbors=2).fit_transform(data)
+print(knn_imp)
