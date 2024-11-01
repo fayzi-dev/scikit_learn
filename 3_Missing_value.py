@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 X = pd.DataFrame({'Age':[100, 200, 300, np.nan, 1000]})
-print(X)
+# print(X)
 #Output
 #       Age
 # 0   100.0
@@ -11,10 +11,11 @@ print(X)
 # 3     NaN
 # 4  1000.0
 
+# 1. SimpleImputer
 from sklearn.impute import SimpleImputer
-imputer = SimpleImputer()
-X = imputer.fit_transform(X)
-print(X)
+# imputer = SimpleImputer()
+# X = imputer.fit_transform(X)
+# print(X)
 # Output : impute define defult method (mean) in simple imputer
 # [[ 100.]
 #  [ 200.]
@@ -24,12 +25,23 @@ print(X)
 
 
 # Disease and Age Scenario
-imputer = SimpleImputer(add_indicator= True)
-X = imputer.fit_transform(X)
-print(X)
+imputer_ind= SimpleImputer(add_indicator= True, strategy='median')
+X = imputer_ind.fit_transform(X)
+# print(X)
 # Output
-# [[ 100.    0.]
-#  [ 200.    0.]
-#  [ 300.    0.]
-#  [ 400.    1.]  -----> indicator
-#  [1000.    0.]]
+    # [[ 100.    0.]
+    #  [ 200.    0.]
+    #  [ 300.    0.]
+    #  [ 250.    1.]
+    #  [1000.    0.]]
+
+# 2. Iterative imputer
+df = pd.read_csv('Datasets/titanic.csv')
+# print(df.head())
+# print(df.isnull().sum())
+data = df[['Age']]
+# print(data)
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+iterative_imp = IterativeImputer().fit_transform(data)
+print(iterative_imp)
